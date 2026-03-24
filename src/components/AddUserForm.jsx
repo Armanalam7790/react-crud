@@ -2,19 +2,40 @@ import { nanoid } from "nanoid";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const AddUserForm = ({settoggle, setuser}) => {
+const AddUserForm = ({settoggle, setuser,editHandle,seteditHandle}) => {
+  console.log(editHandle);
+  
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm();
+    formState: { errors,isValid },
+  } = useForm({
+    
+    mode:"onChange",
+    defaultValues: editHandle
+  });
 
+  console.log(isValid);
+  
   
 const submitHandler  = (data)=>{
 
 
-setuser(prev => [...prev , {...data, id:nanoid()}])
+if (editHandle) {
+  
+
+
+  setuser((prev)=> {
+   return prev.map((val)=>{
+      return val.id === editHandle.id ? {...val, ...data} : val
+    })
+  })
+  seteditHandle(null)
+  
+} else{
+  setuser(prev => [...prev , {...data, id:nanoid()}])
+}
 
 settoggle(false)
 
@@ -122,7 +143,7 @@ reset()
 
         </div>
 
-        <button className="bg-blue-600 rounded text-2xl cursor-pointer  py-2">
+        <button disabled={!isValid} className={` ${!isValid ? "bg-gray-500 cursor-text" : "bg-blue-600"} rounded text-2xl cursor-pointer  py-2`}>
           Add User
         </button>
       </form>

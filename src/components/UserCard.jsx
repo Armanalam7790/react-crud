@@ -1,8 +1,9 @@
 
 import React from 'react'
 
-const UserCard = ({user}) => {
-    console.log(user.imp_id);
+const UserCard = ({user,HandleDelete, seteditHandle, settoggle}) => {
+    // console.log(user.imp_id);
+    // console.log(HandleDelete);
     
     
   return (
@@ -27,8 +28,19 @@ const UserCard = ({user}) => {
           <p>{user.imp_id}</p>
 
           <div className='flex justify-between items-center gap-5 mt-2'>
-                    <button className='p-2 border  border-amber-500 text-yellow-500 w-[50%] rounded active:scale-95 cursor-pointer'>Remove</button>
-                   <button className='p-2 border  border-rose-500 text-rose-500 w-[50%] rounded active:scale-95 cursor-pointer'>Update</button>
+                    <button
+                    onClick={()=> HandleDelete(user.id)
+                    }
+                    
+                    className='p-2 border  border-amber-500 text-yellow-500 w-[50%] rounded active:scale-95 cursor-pointer'>Remove</button>
+
+
+                   <button
+                   onClick={()=> {
+                    seteditHandle(user)
+                    settoggle(true)
+                   }}
+                   className='p-2 border  border-rose-500 text-rose-500 w-[50%] rounded active:scale-95 cursor-pointer'>Update</button>
           </div>
 
         </div>
