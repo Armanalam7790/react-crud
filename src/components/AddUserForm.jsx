@@ -1,8 +1,9 @@
 import { nanoid } from "nanoid";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-const AddUserForm = ({settoggle, setuser,editHandle,seteditHandle}) => {
+const AddUserForm = ({settoggle, setuser,editHandle,seteditHandle,user}) => {
   console.log(editHandle);
   
   const {
@@ -16,7 +17,7 @@ const AddUserForm = ({settoggle, setuser,editHandle,seteditHandle}) => {
     defaultValues: editHandle
   });
 
-  console.log(isValid);
+  
   
   
 const submitHandler  = (data)=>{
@@ -27,14 +28,23 @@ if (editHandle) {
 
 
   setuser((prev)=> {
-   return prev.map((val)=>{
+  let updateuser =  prev.map((val)=>{
       return val.id === editHandle.id ? {...val, ...data} : val
     })
+
+    localStorage.setItem('user', JSON.stringify(updateuser))
+    toast.success('User Updated')
+    return updateuser
+
   })
   seteditHandle(null)
   
 } else{
-  setuser(prev => [...prev , {...data, id:nanoid()}])
+  // setuser(prev => [...prev , {...data, id:nanoid()}])
+  let arr = [...user, {...data , id: nanoid()}]
+  setuser(arr)
+  toast.success('User Added')
+  localStorage.setItem('user', JSON.stringify(arr))
 }
 
 settoggle(false)
