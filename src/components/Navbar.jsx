@@ -1,11 +1,14 @@
 import React from 'react'
+import 'remixicon/fonts/remixicon.css'
 
 const Navbar = ({settoggle, toggle}) => {
  
   
   return (
     <div className=' flex items-center justify-between px-10 h-[10%] border-b-2 bg-black fixed w-full '>
-        <h2 className='text-2xl'>CRUD</h2>
+        <h2 className='text-2xl'>
+       <img src="./logo.png" alt="" className='h-18' />
+        </h2>
 
         <div className='flex gap-10 items-center'>
 

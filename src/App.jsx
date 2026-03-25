@@ -3,42 +3,16 @@ import Navbar from "./components/Navbar";
 import AddUserForm from "./components/AddUserForm";
 import { useState } from "react";
 import UserCard from "./components/UserCard";
+import { toast } from "react-toastify";
 
 const App = () => {
   const [toggle, settoggle] = useState(false);
 
-  const [user, setuser] = useState([
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      email: "rahul@gmail.com",
-      designation: "Frontend Developer",
-      imp_id: "EMP101",
-      img: "https://images.unsplash.com/photo-1773053525998-8cb667020fa7?q=80&w=1101&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-           mobile:6209923553,
-           role:'manager'
-    },
-    {
-      id: 2,
-      name: "Aman Khan",
-      email: "aman@gmail.com",
-      designation: "Backend Developer",
-      imp_id: "EMP102",
-      img: "https://images.unsplash.com/photo-1773053525998-8cb667020fa7?q=80&w=1101&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      mobile:6209923553,
-        role:'manager'
-    },
-    {
-      id: 3,
-      name: "Priya Singh",
-      email: "priya@gmail.com",
-      designation: "UI/UX Designer",
-      imp_id: "EMP103",
-      img: "https://images.unsplash.com/photo-1773053525998-8cb667020fa7?q=80&w=1101&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-           mobile:6209923553,
-             role:'manager'
-    },
-  ]);
+  
+
+  const [user, setuser] = useState(
+  JSON.parse(localStorage.getItem('user')) || []
+);
   const [editHandle, seteditHandle] = useState(null);
 
 
@@ -47,6 +21,8 @@ const App = () => {
     console.log(id);
     const res = user.filter((elem) => elem.id !== id);
     setuser(res);
+    toast.error('User Delete')
+    localStorage.setItem('user', JSON.stringify(res))
   };
 
   // console.log('users ', user);
@@ -62,6 +38,7 @@ const App = () => {
           setuser={setuser}
           editHandle={editHandle}
           seteditHandle={seteditHandle}
+          user={user}
         />
       ) : (
         <div className="flex justify-center gap-6 flex-wrap">
